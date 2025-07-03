@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeDarkMode();
     initializeFormHandling();
     initializeNavigation();
+    initializeMobileMenu();
     initializeWhatsAppFloat();
     
     // Mark as loaded
@@ -65,29 +66,29 @@ function initializeDarkMode() {
     // Dark mode toggle functionality - using ID selector
     const darkModeToggle = document.getElementById('darkModeToggle');
     
-    if (darkModeToggle) {
-        // Remove any existing listeners
-        darkModeToggle.removeEventListener('click', toggleDarkMode);
-        
-        // Add fresh listener
-        darkModeToggle.addEventListener('click', toggleDarkMode);
-    }
-    
-    // Simple toggle function
-    function toggleDarkMode(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        const isDark = document.documentElement.classList.contains('dark');
-        
-        if (isDark) {
-            disableDarkMode();
-        } else {
-            enableDarkMode();
-        }
+    if (darkModeToggle) {        
+        // Add fresh listener with inline function
+        darkModeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('Dark mode toggle clicked!'); // Debug log
+            
+            const isDark = document.documentElement.classList.contains('dark');
+            
+            if (isDark) {
+                disableDarkMode();
+            } else {
+                enableDarkMode();
+            }
+        });
+    } else {
+        console.error('Dark mode toggle button not found!');
     }
     
     function enableDarkMode() {
+        console.log('Enabling dark mode...');
+        
         // Add dark class to html and body
         document.documentElement.classList.add('dark');
         document.body.classList.add('dark');
@@ -104,9 +105,13 @@ function initializeDarkMode() {
         allSections.forEach(section => {
             section.classList.add('dark');
         });
+        
+        console.log('Dark mode enabled');
     }
     
     function disableDarkMode() {
+        console.log('Disabling dark mode...');
+        
         // Remove dark class
         document.documentElement.classList.remove('dark');
         document.body.classList.remove('dark');
@@ -123,11 +128,15 @@ function initializeDarkMode() {
         allSections.forEach(section => {
             section.classList.remove('dark');
         });
+        
+        console.log('Dark mode disabled');
     }
     
     function updateIcons(isDark) {
         const moonIcon = document.getElementById('moonIcon');
         const sunIcon = document.getElementById('sunIcon');
+        
+        console.log('Updating icons:', { isDark, moonIcon: !!moonIcon, sunIcon: !!sunIcon });
         
         if (moonIcon && sunIcon) {
             if (isDark) {
@@ -137,6 +146,8 @@ function initializeDarkMode() {
                 moonIcon.style.display = 'inline-block';
                 sunIcon.style.display = 'none';
             }
+        } else {
+            console.error('Dark mode icons not found!');
         }
     }
 }
@@ -191,11 +202,24 @@ function initializeMobileMenu() {
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
     
+    console.log('Mobile menu elements:', { mobileMenuButton, mobileMenu, links: mobileMenuLinks.length }); // Debug
+    
     if (mobileMenuButton && mobileMenu) {
         // Toggle mobile menu
         mobileMenuButton.addEventListener('click', function(e) {
+            e.preventDefault();
             e.stopPropagation();
-            mobileMenu.classList.toggle('hidden');
+            
+            console.log('Mobile menu button clicked!'); // Debug log
+            
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                console.log('Mobile menu opened');
+            } else {
+                mobileMenu.classList.add('hidden');
+                console.log('Mobile menu closed');
+            }
         });
         
         // Close mobile menu when clicking outside
@@ -209,7 +233,13 @@ function initializeMobileMenu() {
         mobileMenuLinks.forEach(link => {
             link.addEventListener('click', function() {
                 mobileMenu.classList.add('hidden');
+                console.log('Mobile menu closed via link click');
             });
+        });
+    } else {
+        console.error('Mobile menu elements not found!', { 
+            button: !!mobileMenuButton, 
+            menu: !!mobileMenu 
         });
     }
 }
