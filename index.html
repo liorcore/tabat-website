@@ -103,10 +103,13 @@
                 </div>
                 
                 <!-- Mobile Menu Button -->
-                <button id="mobileMenuButton" class="md:hidden p-2 bg-warmBeige dark:bg-gray-700 rounded-lg">
-                    <i class="fas fa-bars text-gray-800 dark:text-gray-200"></i>
+                <div class="relative md:hidden">
+                    <button id="mobileMenuButton" class="p-2 bg-warmBeige dark:bg-gray-700 rounded-lg">
+                        <i class="fas fa-bars text-gray-800 dark:text-gray-200"></i>
+                    </button>
+                    
                     <!-- Mobile Menu -->
-                    <div id="mobileMenu" class="hidden absolute top-16 right-6 bg-white dark:bg-gray-800 rounded-xl shadow-xl py-4 px-6 w-64 border border-gray-200 dark:border-gray-600">
+                    <div id="mobileMenu" class="hidden absolute top-16 right-0 bg-white dark:bg-gray-800 rounded-xl shadow-xl py-4 px-6 w-64 border border-gray-200 dark:border-gray-600 z-50">
                         <div class="space-y-3">
                             <a href="#hero" class="mobile-menu-link block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-warmBeige dark:hover:bg-gray-700 rounded-lg transition-all">
                                 בית
@@ -125,7 +128,7 @@
                             </a>
                         </div>
                     </div>
-                </button>
+                </div>
             </div>
         </nav>
     </header>

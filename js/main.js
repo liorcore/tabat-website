@@ -11,20 +11,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Global variables
     let isLoaded = false;
     
-    // Initialize all functions
-    initializeAnimations();
-    initializeScrollEffects();
-    initializeDarkMode();
-    initializeFormHandling();
-    initializeNavigation();
-    initializeMobileMenu();
-    initializeWhatsAppFloat();
-    
-    // Mark as loaded
+    // Wait a bit for DOM to be fully ready
     setTimeout(() => {
+        console.log('Initializing all functions...');
+        
+        // Initialize all functions
+        initializeAnimations();
+        initializeScrollEffects();
+        initializeDarkMode();
+        initializeFormHandling();
+        initializeNavigation();
+        initializeMobileMenu();
+        initializeWhatsAppFloat();
+        
+        // Mark as loaded
         isLoaded = true;
         document.body.classList.add('loaded');
-    }, 500);
+        console.log('All functions initialized successfully!');
+    }, 100);
 });
 
 /**
@@ -66,7 +70,12 @@ function initializeDarkMode() {
     // Dark mode toggle functionality - using ID selector
     const darkModeToggle = document.getElementById('darkModeToggle');
     
+    console.log('Dark mode toggle element:', darkModeToggle);
+    
     if (darkModeToggle) {        
+        // Remove any existing listeners first
+        darkModeToggle.onclick = null;
+        
         // Add fresh listener with inline function
         darkModeToggle.addEventListener('click', function(e) {
             e.preventDefault();
@@ -75,6 +84,7 @@ function initializeDarkMode() {
             console.log('Dark mode toggle clicked!'); // Debug log
             
             const isDark = document.documentElement.classList.contains('dark');
+            console.log('Current dark mode state:', isDark);
             
             if (isDark) {
                 disableDarkMode();
@@ -82,8 +92,10 @@ function initializeDarkMode() {
                 enableDarkMode();
             }
         });
+        
+        console.log('Dark mode toggle listener added successfully!');
     } else {
-        console.error('Dark mode toggle button not found!');
+        console.error('Dark mode toggle button not found! Make sure the element with ID "darkModeToggle" exists.');
     }
     
     function enableDarkMode() {
@@ -136,18 +148,29 @@ function initializeDarkMode() {
         const moonIcon = document.getElementById('moonIcon');
         const sunIcon = document.getElementById('sunIcon');
         
-        console.log('Updating icons:', { isDark, moonIcon: !!moonIcon, sunIcon: !!sunIcon });
+        console.log('Updating icons:', { 
+            isDark, 
+            moonIcon: moonIcon, 
+            sunIcon: sunIcon,
+            moonFound: !!moonIcon,
+            sunFound: !!sunIcon
+        });
         
         if (moonIcon && sunIcon) {
             if (isDark) {
                 moonIcon.style.display = 'none';
                 sunIcon.style.display = 'inline-block';
+                console.log('Dark mode: showing sun icon, hiding moon icon');
             } else {
                 moonIcon.style.display = 'inline-block';
                 sunIcon.style.display = 'none';
+                console.log('Light mode: showing moon icon, hiding sun icon');
             }
         } else {
-            console.error('Dark mode icons not found!');
+            console.error('Dark mode icons not found!', {
+                moonIconElement: moonIcon,
+                sunIconElement: sunIcon
+            });
         }
     }
 }
@@ -202,23 +225,33 @@ function initializeMobileMenu() {
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
     
-    console.log('Mobile menu elements:', { mobileMenuButton, mobileMenu, links: mobileMenuLinks.length }); // Debug
+    console.log('Mobile menu elements:', { 
+        button: mobileMenuButton, 
+        menu: mobileMenu, 
+        links: mobileMenuLinks.length,
+        buttonFound: !!mobileMenuButton,
+        menuFound: !!mobileMenu
+    });
     
     if (mobileMenuButton && mobileMenu) {
+        // Remove any existing listeners
+        mobileMenuButton.onclick = null;
+        
         // Toggle mobile menu
         mobileMenuButton.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
-            console.log('Mobile menu button clicked!'); // Debug log
+            console.log('Mobile menu button clicked!');
+            console.log('Menu classes before toggle:', mobileMenu.className);
             
             const isHidden = mobileMenu.classList.contains('hidden');
             if (isHidden) {
                 mobileMenu.classList.remove('hidden');
-                console.log('Mobile menu opened');
+                console.log('Mobile menu opened - classes now:', mobileMenu.className);
             } else {
                 mobileMenu.classList.add('hidden');
-                console.log('Mobile menu closed');
+                console.log('Mobile menu closed - classes now:', mobileMenu.className);
             }
         });
         
