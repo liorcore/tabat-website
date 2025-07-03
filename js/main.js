@@ -221,100 +221,138 @@ function initializeFormHandling() {
  * Simple Navigation (using CSS scroll-behavior: smooth)
  */
 function initializeMobileMenu() {
+    console.log('🍔 Initializing mobile menu...');
+    
     const mobileMenuButton = document.getElementById('mobileMenuButton');
     const mobileMenu = document.getElementById('mobileMenu');
     const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
     
-    console.log('Mobile menu elements:', { 
-        button: mobileMenuButton, 
-        menu: mobileMenu, 
-        links: mobileMenuLinks.length,
-        buttonFound: !!mobileMenuButton,
-        menuFound: !!mobileMenu
+    console.log('Mobile menu elements found:', { 
+        button: !!mobileMenuButton, 
+        menu: !!mobileMenu, 
+        links: mobileMenuLinks.length
     });
     
-    if (mobileMenuButton && mobileMenu) {
-        // Initialize menu state - make sure it starts hidden
-        mobileMenu.classList.add('hidden');
-        mobileMenu.style.display = 'none';
-        mobileMenu.style.opacity = '0';
-        mobileMenu.style.visibility = 'hidden';
-        
-        console.log('Mobile menu initialized as hidden');
-        
-        // Remove any existing listeners
-        mobileMenuButton.onclick = null;
-        
-        // Toggle mobile menu
-        mobileMenuButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            console.log('Mobile menu button clicked!');
-            console.log('Menu classes before toggle:', mobileMenu.className);
-            console.log('Menu style before toggle:', mobileMenu.style.cssText);
-            
-            const isHidden = mobileMenu.classList.contains('hidden') || 
-                           mobileMenu.style.display === 'none';
-            
-            if (isHidden) {
-                // Show menu
-                mobileMenu.classList.remove('hidden');
-                mobileMenu.style.display = 'block';
-                mobileMenu.style.opacity = '1';
-                mobileMenu.style.visibility = 'visible';
-                console.log('Mobile menu opened - classes now:', mobileMenu.className);
-                console.log('Mobile menu opened - style now:', mobileMenu.style.cssText);
-            } else {
-                // Hide menu
-                mobileMenu.classList.add('hidden');
-                mobileMenu.style.opacity = '0';
-                mobileMenu.style.visibility = 'hidden';
-                setTimeout(() => {
-                    if (mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.style.display = 'none';
-                    }
-                }, 300);
-                console.log('Mobile menu closed - classes now:', mobileMenu.className);
-                console.log('Mobile menu closed - style now:', mobileMenu.style.cssText);
-            }
-        });
-        
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.style.opacity = '0';
-                mobileMenu.style.visibility = 'hidden';
-                setTimeout(() => {
-                    if (mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.style.display = 'none';
-                    }
-                }, 300);
-                console.log('Mobile menu closed via outside click');
-            }
-        });
-        
-        // Close mobile menu when clicking on links
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.style.opacity = '0';
-                mobileMenu.style.visibility = 'hidden';
-                setTimeout(() => {
-                    if (mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.style.display = 'none';
-                    }
-                }, 300);
-                console.log('Mobile menu closed via link click');
-            });
-        });
-    } else {
-        console.error('Mobile menu elements not found!', { 
-            button: !!mobileMenuButton, 
-            menu: !!mobileMenu 
-        });
+    if (!mobileMenuButton) {
+        console.error('❌ Mobile menu button not found!');
+        return;
     }
+    
+    if (!mobileMenu) {
+        console.error('❌ Mobile menu not found!');
+        return;
+    }
+    
+    // Add CSS rules directly to ensure mobile menu works
+    const style = document.createElement('style');
+    style.textContent = `
+        .mobile-menu-hidden {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transform: translateY(-10px) !important;
+        }
+        .mobile-menu-visible {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translateY(0) !important;
+            transition: all 0.3s ease !important;
+        }
+        #mobileMenu {
+            position: absolute !important;
+            top: 100% !important;
+            right: 0 !important;
+            z-index: 9999 !important;
+            background: white !important;
+            border-radius: 12px !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
+            padding: 1rem !important;
+            width: 16rem !important;
+            border: 1px solid #e5e7eb !important;
+        }
+        .dark #mobileMenu {
+            background: #1f2937 !important;
+            border-color: #4b5563 !important;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Initialize menu state - start hidden
+    mobileMenu.classList.add('mobile-menu-hidden');
+    mobileMenu.classList.remove('mobile-menu-visible', 'hidden');
+    
+    console.log('✅ Mobile menu initialized as hidden');
+    
+    // Clear any existing listeners
+    mobileMenuButton.onclick = null;
+    
+    // Mobile menu toggle function
+    function toggleMobileMenu() {
+        console.log('🔄 Toggling mobile menu...');
+        
+        const isHidden = mobileMenu.classList.contains('mobile-menu-hidden');
+        console.log('Menu is currently hidden:', isHidden);
+        
+        if (isHidden) {
+            // Show menu
+            mobileMenu.classList.remove('mobile-menu-hidden');
+            mobileMenu.classList.add('mobile-menu-visible');
+            console.log('✅ Mobile menu opened');
+        } else {
+            // Hide menu
+            mobileMenu.classList.remove('mobile-menu-visible');
+            mobileMenu.classList.add('mobile-menu-hidden');
+            console.log('✅ Mobile menu closed');
+        }
+    }
+    
+    // Hide menu function
+    function hideMobileMenu() {
+        mobileMenu.classList.remove('mobile-menu-visible');
+        mobileMenu.classList.add('mobile-menu-hidden');
+        console.log('🔒 Mobile menu hidden');
+    }
+    
+    // Add click event to button
+    mobileMenuButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('🖱️ Mobile menu button clicked!');
+        toggleMobileMenu();
+    });
+    
+    // Also try with touchstart for mobile devices
+    mobileMenuButton.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        console.log('👆 Mobile menu button touched!');
+        toggleMobileMenu();
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+            hideMobileMenu();
+        }
+    });
+    
+    // Close menu when clicking on links
+    mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            hideMobileMenu();
+        });
+    });
+    
+    // Add visual feedback on button hover/touch
+    mobileMenuButton.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.05)';
+    });
+    
+    mobileMenuButton.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1)';
+    });
+    
+    console.log('✅ Mobile menu initialization complete!');
 }
 
 function initializeNavigation() {
