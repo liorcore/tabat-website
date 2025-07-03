@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>טאבט - מסעות קסומים | טיפולים רגשיים גופניים</title>
+    <meta name="description" content="טאבט - מרחב נשי מרפא עם דפנה. טיפולים רגשיים-גופניים, עיסויים הוליסטיים, ליווי נשי אישי במסע פנימי של ריפוי ושלווה.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+        <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Hebrew Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=Frank+Ruhl+Libre:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FDF5E6',
+                        sage: '#87A96B',
+                        dustyRose: '#D4A5A5',
+                        warmBeige: '#F5E6D3',
+                        softPink: '#F7D4D4'
+                    },
+                    fontFamily: {
+                        'hebrew': ['Heebo', 'sans-serif'],
+                        'serif-hebrew': ['Frank Ruhl Libre', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-hebrew bg-cream dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300">
+    
+    <!-- Header -->
+    <header id="header" class="fixed w-full top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b-2 border-dustyRose/40 dark:border-gray-600 shadow-sm transition-transform duration-300">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="#hero" class="flex items-center space-x-3 hover:scale-105 transition-transform duration-300">
+                    <div class="w-12 h-12 bg-gradient-to-br from-dustyRose via-softPink to-sage rounded-full flex items-center justify-center shadow-lg">
+                        <!-- Lotus SVG Logo -->
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C12 2 16 6 16 12C16 16.5 14 20 12 22C10 20 8 16.5 8 12C8 6 12 2 12 2Z"/>
+                            <path d="M12 2C12 2 8 6 8 12C8 16.5 10 20 12 22C14 20 16 16.5 16 12C16 6 12 2 12 2Z" opacity="0.7"/>
+                            <circle cx="12" cy="12" r="2" opacity="0.5"/>
+                        </svg>
+                    </div>
+                    <h1 class="font-serif-hebrew text-2xl font-bold text-gray-800 dark:text-gray-100">טאבט</h1>
+                </a>
+                
+                <!-- Navigation Menu -->
+                <div class="hidden md:flex items-center space-x-12">
+                    <a href="#hero" class="px-4 py-2 text-gray-800 dark:text-gray-200 hover:text-sage dark:hover:text-dustyRose hover:bg-warmBeige dark:hover:bg-gray-700 rounded-lg transition-all font-medium">
+                        בית
+                    </a>
+                    <a href="#about" class="px-4 py-2 text-gray-800 dark:text-gray-200 hover:text-sage dark:hover:text-dustyRose hover:bg-warmBeige dark:hover:bg-gray-700 rounded-lg transition-all font-medium">
+                        אודות
+                    </a>
+                    <a href="#journey" class="px-4 py-2 text-gray-800 dark:text-gray-200 hover:text-sage dark:hover:text-dustyRose hover:bg-warmBeige dark:hover:bg-gray-700 rounded-lg transition-all font-medium">
+                        המסע
+                    </a>
+                    <a href="#treatments" class="px-4 py-2 text-gray-800 dark:text-gray-200 hover:text-sage dark:hover:text-dustyRose hover:bg-warmBeige dark:hover:bg-gray-700 rounded-lg transition-all font-medium">
+                        טיפולים
+                    </a>
+                    <a href="#contact" class="px-4 py-2 text-gray-800 dark:text-gray-200 hover:text-sage dark:hover:text-dustyRose hover:bg-warmBeige dark:hover:bg-gray-700 rounded-lg transition-all font-medium">
+                        יצירת קשר
+                    </a>
+                </div>
+                
+                <!-- Dark Mode Toggle & Book Button -->
+                <div class="flex items-center space-x-4">
+                    <!-- Dark Mode Toggle -->
+                    <button 
+                        id="darkModeToggle"
+                        class="p-2 rounded-full bg-warmBeige dark:bg-gray-700 hover:bg-dustyRose dark:hover:bg-gray-600 transition-all duration-300"
+                        aria-label="החלף מצב כהה"
+                    >
+                        <i class="fas fa-moon text-gray-700" id="moonIcon"></i>
+                        <i class="fas fa-sun text-yellow-400" id="sunIcon" style="display: none;"></i>
+                    </button>
+                    
+
+                    <!-- Book Treatment Button -->
+                    <a href="#treatments" class="hidden md:inline-flex items-center px-6 py-3 bg-gradient-to-r from-dustyRose to-sage text-white font-semibold rounded-full hover:scale-105 hover:shadow-lg transition-all duration-300">
+                        <i class="fas fa-heart ml-2"></i>
+                        הזמיני טיפול
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden p-2 bg-warmBeige dark:bg-gray-700 rounded-lg">
+                    <i class="fas fa-bars text-gray-800 dark:text-gray-200"></i>
+                    <!-- Mobile Menu -->
+                    <div id="mobileMenu" class="hidden absolute top-16 right-6 bg-white dark:bg-gray-800 rounded-xl shadow-xl py-4 px-6 w-64 border border-gray-200 dark:border-gray-600">
+                        <div class="space-y-3">
+                            <a href="#hero" class="mobile-menu-link block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-warmBeige dark:hover:bg-gray-700 rounded-lg transition-all">
+                                בית
+                            </a>
+                            <a href="#about" class="mobile-menu-link block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-warmBeige dark:hover:bg-gray-700 rounded-lg transition-all">
+                                אודות
+                            </a>
+                            <a href="#journey" class="mobile-menu-link block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-warmBeige dark:hover:bg-gray-700 rounded-lg transition-all">
+                                המסע
+                            </a>
+                            <a href="#treatments" class="mobile-menu-link block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-warmBeige dark:hover:bg-gray-700 rounded-lg transition-all">
+                                טיפולים
+                            </a>
+                            <a href="#contact" class="mobile-menu-link block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-warmBeige dark:hover:bg-gray-700 rounded-lg transition-all">
+                                יצירת קשר
+                            </a>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <!-- Background Image -->
+        <div class="absolute inset-0 bg-gradient-to-br from-cream via-warmBeige to-softPink dark:from-gray-900 dark:via-gray-800 dark:to-gray-700"></div>
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23D4A5A5" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
+        
+        <!-- Content -->
+        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto mt-20">
+            <div class="hero-content opacity-100">
+                <!-- Lotus Logo -->
+                <div class="mb-8">
+                    <div class="w-24 h-24 mx-auto text-sage dark:text-dustyRose opacity-90 mb-4 lotus-logo">
+                        <svg viewBox="0 0 100 100" class="w-full h-full">
+                            <!-- Outer petals -->
+                            <path d="M50 15 C30 35, 30 55, 50 75 C70 55, 70 35, 50 15 Z" fill="currentColor" opacity="0.5"/>
+                            <path d="M25 50 C45 30, 65 30, 75 50 C65 70, 45 70, 25 50 Z" fill="currentColor" opacity="0.4"/>
+                            <path d="M75 50 C55 30, 35 30, 25 50 C35 70, 55 70, 75 50 Z" fill="currentColor" opacity="0.4"/>
+                            <!-- Middle petals -->
+                            <path d="M50 20 C35 37, 35 53, 50 70 C65 53, 65 37, 50 20 Z" fill="currentColor" opacity="0.7"/>
+                            <path d="M30 50 C47 35, 63 35, 70 50 C63 65, 47 65, 30 50 Z" fill="currentColor" opacity="0.6"/>
+                            <path d="M70 50 C53 35, 37 35, 30 50 C37 65, 53 65, 70 50 Z" fill="currentColor" opacity="0.6"/>
+                            <!-- Inner lotus -->
+                            <path d="M50 25 C40 40, 40 50, 50 65 C60 50, 60 40, 50 25 Z" fill="currentColor" opacity="0.9"/>
+                            <!-- Center -->
+                            <circle cx="50" cy="50" r="6" fill="currentColor" opacity="1"/>
+                            <circle cx="50" cy="50" r="3" fill="#fff" opacity="0.8"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <h1 class="font-serif-hebrew text-5xl md:text-7xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+                    ברוכה הבאה לטאבט
+                </h1>
+                <div class="w-24 h-1 bg-gradient-to-l from-dustyRose to-sage mx-auto mb-8"></div>
+                
+                <p class="text-xl md:text-2xl text-gray-700 dark:text-gray-200 mb-6 leading-relaxed font-semibold">
+                    זה לא עיסוי. זה מסע פנימה.
+                </p>
+                
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-2xl mx-auto">
+                    כאן, באמצע המרוץ, את מוזמנת לעצור לרגע – ולהיזכר בך.<br>
+                    טאבט הוא מרחב נשי, מרפא, עוטף. מסע פנימי דרך מגע, נשימה, הקשבה.
+                </p>
+                
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-12 leading-relaxed">
+                    אני דפנה, מלווה נשים במסע אישי רגשי־גופני – עם טיפולים שמשלבים עיסוי, נוכחות ואהבה.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="#treatments" class="group px-8 py-4 bg-dustyRose dark:bg-sage text-white rounded-full text-lg font-medium hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center">
+                        <i class="fas fa-lotus mr-3 group-hover:rotate-12 transition-transform"></i>
+                        לרשימת הטיפולים
+                    </a>
+                    
+                    <a href="https://wa.me/972501234567" target="_blank" class="px-8 py-4 border-2 border-sage dark:border-dustyRose text-sage dark:text-dustyRose rounded-full text-lg font-medium hover:bg-sage hover:text-white dark:hover:bg-dustyRose dark:hover:text-white transition-all duration-300 flex items-center">
+                        <i class="fab fa-whatsapp mr-3"></i>
+                        וואטסאפ
+                    </a>
+                </div>
+                
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-8">
+                    מוכנה להניח הכול ולהתמסר לעצמך? 💖
+                </p>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div class="w-6 h-10 border-2 border-sage dark:border-dustyRose rounded-full flex justify-center">
+                <div class="w-1 h-3 bg-sage dark:bg-dustyRose rounded-full mt-2 animate-pulse"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white dark:bg-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="font-serif-hebrew text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-8">
+                    המסע שלי
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-l from-dustyRose to-sage mx-auto mb-12"></div>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="text-right space-y-6">
+                        <p class="text-lg text-gray-700 dark:text-gray-200 leading-relaxed font-medium">
+                            השליחות שלי היא ליצור מרחב בטוח ומקדש עבור נשים – מקום שבו את יכולה להיות בדיוק מי שאת.
+                        </p>
+                        <p class="text-lg text-gray-700 dark:text-gray-200 leading-relaxed font-medium">
+                            המגע הנשי הוא שפה עתיקה של ריפוי. כאן נפגשות טכניקות מסורתיות עם אינטואיציה עכשווית, יוצרות מסע ייחודי לכל אישה.
+                        </p>
+                        <p class="text-lg text-gray-700 dark:text-gray-200 leading-relaxed font-medium">
+                            כל טיפול הוא הזמנה לחזור הביתה אל עצמך – דרך הגוף, הנשימה והלב.
+                        </p>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="w-80 h-80 mx-auto bg-gradient-to-br from-dustyRose via-warmBeige to-sage rounded-full flex items-center justify-center shadow-2xl">
+                            <div class="w-72 h-72 bg-cream dark:bg-gray-700 rounded-full flex items-center justify-center">
+                                <i class="fas fa-spa text-6xl text-sage dark:text-dustyRose"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journey Section -->
+    <section id="journey" class="py-20 bg-warmBeige dark:bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="font-serif-hebrew text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-8">
+                    מהו "מסע קסום"?
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-l from-dustyRose to-sage mx-auto mb-12"></div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="w-16 h-16 bg-dustyRose rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-hands text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-serif-hebrew text-xl font-bold text-sage dark:text-dustyRose mb-4">מגע מרפא</h3>
+                        <p class="text-gray-700 dark:text-gray-300">שילוב טכניקות מגע מסורתיות ועכשוויות המתאימות לצרכים האישיים שלך</p>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="w-16 h-16 bg-sage rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-heart text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-serif-hebrew text-xl font-bold text-sage dark:text-dustyRose mb-4">הקשבה עמוקה</h3>
+                        <p class="text-gray-700 dark:text-gray-300">נוכחות מלאה ותשומת לב לצרכים הרגשיים והפיזיים שלך</p>
+                    </div>
+                    
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="w-16 h-16 bg-dustyRose rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-leaf text-white text-2xl"></i>
+                        </div>
+                        <h3 class="font-serif-hebrew text-xl font-bold text-sage dark:text-dustyRose mb-4">הובלה רגשית</h3>
+                        <p class="text-gray-700 dark:text-gray-300">ליווי עדין דרך תהליכים רגשיים וחיבור מחדש לחוכמה הפנימית</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Treatments Section -->
+    <section id="treatments" class="py-24 bg-white dark:bg-gray-800 min-h-screen">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-20">
+                    <h2 class="font-serif-hebrew text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-8">
+                        🌸 הזמיני טיפול 🌸
+                    </h2>
+                    <div class="w-24 h-1 bg-gradient-to-l from-dustyRose to-sage mx-auto mb-8"></div>
+                    <p class="text-xl text-gray-700 dark:text-gray-200 max-w-2xl mx-auto leading-relaxed font-medium">
+                        בחרי את הטיפול המתאים לך והזמיני תור עכשיו 🌸<br>
+                        כל טיפול הוא מסע ייחודי המותאם אישית לצרכים שלך
+                    </p>
+                    
+                    <!-- Price Summary -->
+                    <div class="price-summary mt-8 bg-warmBeige dark:bg-gray-700 rounded-2xl p-6 max-w-lg mx-auto">
+                        <h3 class="font-serif-hebrew text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">💰 מחירון טיפולים:</h3>
+                        <div class="space-y-2 text-gray-700 dark:text-gray-200 font-medium">
+                            <div class="flex justify-between">
+                                <span>עיסוי הריון</span>
+                                <span class="font-bold">300₪</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>עיסוי הוליסטי</span>
+                                <span class="font-bold">320₪</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>עיסוי מרוקאי</span>
+                                <span class="font-bold">350₪</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>עיסוי תאילנדי</span>
+                                <span class="font-bold">370₪</span>
+                            </div>
+                            <div class="flex justify-between border-t pt-2">
+                                <span>טיפול אינטואיטיבי ⭐</span>
+                                <span class="font-bold text-gray-800 dark:text-gray-100">400₪</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Treatment Card 1 -->
+                    <div class="treatment-card bg-white dark:bg-gray-700 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+                        <!-- Treatment Image -->
+                        <div class="treatment-image h-48 bg-gradient-to-br from-dustyRose to-sage relative">
+                            <div class="absolute inset-0 bg-black/20"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                                    <i class="treatment-icon fas fa-spa text-white text-3xl"></i>
+                                </div>
+                            </div>
+                            <!-- Price Badge -->
+                            <div class="price-badge absolute top-4 right-4 bg-white dark:bg-gray-800 px-3 py-1 rounded-full">
+                                <span class="text-sage dark:text-dustyRose font-bold">320 ₪</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="font-serif-hebrew text-xl font-bold text-sage dark:text-dustyRose mb-3 text-center">
+                                עיסוי משולב הוליסטי
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4 text-center leading-relaxed">
+                                שילוב טכניקות שיאצו, טווינה ומגע מרגיע לחוויה הוליסטית מלאה
+                            </p>
+                            
+                            <div class="flex justify-between items-center mb-6 text-sm">
+                                <div class="flex items-center text-gray-500">
+                                    <i class="fas fa-clock mr-1"></i>
+                                    <span>60 דק׳</span>
+                                </div>
+                                <div class="flex items-center text-gray-500">
+                                    <i class="fas fa-heart mr-1"></i>
+                                    <span>הוליסטי</span>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <a href="https://wa.me/972501234567?text=שלום%20דפנה,%20אני%20מעוניינת%20להזמין%20עיסוי%20משולב%20הוליסטי%20(320%20₪)" target="_blank" class="treatment-whatsapp w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-full text-center transition-colors flex items-center justify-center">
+                                    <i class="fab fa-whatsapp mr-2"></i>
+                                    הזמיני בוואטסאפ
+                                </a>
+                                <a href="#contact" class="treatment-contact w-full border-2 border-dustyRose text-dustyRose dark:border-sage dark:text-sage hover:bg-dustyRose hover:text-white dark:hover:bg-sage dark:hover:text-white py-2 rounded-full text-center transition-colors flex items-center justify-center">
+                                    <i class="fas fa-envelope mr-2"></i>
+                                    או שלחי הודעה
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Treatment Card 2 -->
+                    <div class="treatment-card bg-white dark:bg-gray-700 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+                        <!-- Treatment Image -->
+                        <div class="treatment-image h-48 bg-gradient-to-br from-sage to-warmBeige relative">
+                            <div class="absolute inset-0 bg-black/20"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                                    <i class="treatment-icon fas fa-lotus text-white text-3xl"></i>
+                                </div>
+                            </div>
+                            <!-- Price Badge -->
+                            <div class="price-badge absolute top-4 right-4 bg-white dark:bg-gray-800 px-3 py-1 rounded-full">
+                                <span class="text-sage dark:text-dustyRose font-bold">350 ₪</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="font-serif-hebrew text-xl font-bold text-sage dark:text-dustyRose mb-3 text-center">
+                                עיסוי מרוקאי עמוק
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4 text-center leading-relaxed">
+                                נגיעות עמוקות ומרגיעות לשחרור מתחים וניקוי רגשי עמוק
+                            </p>
+                            
+                            <div class="flex justify-between items-center mb-6 text-sm">
+                                <div class="flex items-center text-gray-500">
+                                    <i class="fas fa-clock mr-1"></i>
+                                    <span>60 דק׳</span>
+                                </div>
+                                <div class="flex items-center text-gray-500">
+                                    <i class="fas fa-fire mr-1"></i>
+                                    <span>עמוק</span>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <a href="https://wa.me/972501234567?text=שלום%20דפנה,%20אני%20מעוניינת%20להזמין%20עיסוי%20מרוקאי%20עמוק%20(350%20₪)" target="_blank" class="treatment-whatsapp w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-full text-center transition-colors flex items-center justify-center">
+                                    <i class="fab fa-whatsapp mr-2"></i>
+                                    הזמיני בוואטסאפ
+                                </a>
+                                <a href="#contact" class="treatment-contact w-full border-2 border-dustyRose text-dustyRose dark:border-sage dark:text-sage hover:bg-dustyRose hover:text-white dark:hover:bg-sage dark:hover:text-white py-2 rounded-full text-center transition-colors flex items-center justify-center">
+                                    <i class="fas fa-envelope mr-2"></i>
+                                    או שלחי הודעה
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Treatment Card 3 -->
+                    <div class="treatment-card bg-white dark:bg-gray-700 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+                        <!-- Treatment Image -->
+                        <div class="treatment-image h-48 bg-gradient-to-br from-softPink to-dustyRose relative">
+                            <div class="absolute inset-0 bg-black/20"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                                    <i class="treatment-icon fas fa-yin-yang text-white text-3xl"></i>
+                                </div>
+                            </div>
+                            <!-- Price Badge -->
+                            <div class="price-badge absolute top-4 right-4 bg-white dark:bg-gray-800 px-3 py-1 rounded-full">
+                                <span class="text-sage dark:text-dustyRose font-bold">370 ₪</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="font-serif-hebrew text-xl font-bold text-sage dark:text-dustyRose mb-3 text-center">
+                                עיסוי תאילנדי־נשי
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4 text-center leading-relaxed">
+                                מתיחות עדינות ותנועות זורמות לריפוי הגוף והנפש יחד
+                            </p>
+                            
+                            <div class="flex justify-between items-center mb-6 text-sm">
+                                <div class="flex items-center text-gray-500">
+                                    <i class="fas fa-clock mr-1"></i>
+                                    <span>75 דק׳</span>
+                                </div>
+                                <div class="flex items-center text-gray-500">
+                                    <i class="fas fa-leaf mr-1"></i>
+                                    <span>זורם</span>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <a href="https://wa.me/972501234567?text=שלום%20דפנה,%20אני%20מעוניינת%20להזמין%20עיסוי%20תאילנדי%20נשי%20(370%20₪)" target="_blank" class="treatment-whatsapp w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-full text-center transition-colors flex items-center justify-center">
+                                    <i class="fab fa-whatsapp mr-2"></i>
+                                    הזמיני בוואטסאפ
+                                </a>
+                                <a href="#contact" class="treatment-contact w-full border-2 border-dustyRose text-dustyRose dark:border-sage dark:text-sage hover:bg-dustyRose hover:text-white dark:hover:bg-sage dark:hover:text-white py-2 rounded-full text-center transition-colors flex items-center justify-center">
+                                    <i class="fas fa-envelope mr-2"></i>
+                                    או שלחי הודעה
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Treatment Card 4 -->
+                    <div class="treatment-card bg-white dark:bg-gray-700 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden">
+                        <!-- Treatment Image -->
+                        <div class="treatment-image h-48 bg-gradient-to-br from-cream to-softPink relative">
+                            <div class="absolute inset-0 bg-black/20"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                                    <i class="treatment-icon fas fa-baby text-white text-3xl"></i>
+                                </div>
+                            </div>
+                            <!-- Price Badge -->
+                            <div class="price-badge absolute top-4 right-4 bg-white dark:bg-gray-800 px-3 py-1 rounded-full">
+                                <span class="text-sage dark:text-dustyRose font-bold">300 ₪</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="font-serif-hebrew text-xl font-bold text-sage dark:text-dustyRose mb-3 text-center">
+                                עיסוי הריון
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4 text-center leading-relaxed">
+                                מותאם בעדינות לגוף המשתנה והלב המתרחב בזמן מיוחד זה
+                            </p>
+                            
+                            <div class="flex justify-between items-center mb-6 text-sm">
+                                <div class="flex items-center text-gray-500">
+                                    <i class="fas fa-clock mr-1"></i>
+                                    <span>60 דק׳</span>
+                                </div>
+                                <div class="flex items-center text-gray-500">
+                                    <i class="fas fa-heart mr-1"></i>
+                                    <span>עדין</span>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <a href="https://wa.me/972501234567?text=שלום%20דפנה,%20אני%20מעוניינת%20להזמין%20עיסוי%20הריון%20(300%20₪)" target="_blank" class="treatment-whatsapp w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-full text-center transition-colors flex items-center justify-center">
+                                    <i class="fab fa-whatsapp mr-2"></i>
+                                    הזמיני בוואטסאפ
+                                </a>
+                                <a href="#contact" class="treatment-contact w-full border-2 border-dustyRose text-dustyRose dark:border-sage dark:text-sage hover:bg-dustyRose hover:text-white dark:hover:bg-sage dark:hover:text-white py-2 rounded-full text-center transition-colors flex items-center justify-center">
+                                    <i class="fas fa-envelope mr-2"></i>
+                                    או שלחי הודעה
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Treatment Card 5 -->
+                    <div class="treatment-card premium-treatment bg-white dark:bg-gray-700 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden md:col-span-2 lg:col-span-1">
+                        <!-- Treatment Image -->
+                        <div class="treatment-image h-48 bg-gradient-to-br from-dustyRose via-sage to-softPink relative">
+                            <div class="absolute inset-0 bg-black/20"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                                    <i class="treatment-icon fas fa-magic text-white text-3xl"></i>
+                                </div>
+                            </div>
+                            <!-- Price Badge -->
+                            <div class="price-badge absolute top-4 right-4 bg-white dark:bg-gray-800 px-3 py-1 rounded-full">
+                                <span class="text-sage dark:text-dustyRose font-bold">400 ₪</span>
+                            </div>
+                            <!-- Special Badge -->
+                            <div class="absolute top-4 left-4 bg-gradient-to-r from-dustyRose to-sage text-white px-3 py-1 rounded-full text-sm">
+                                ⭐ מומלץ
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="font-serif-hebrew text-xl font-bold text-sage dark:text-dustyRose mb-3 text-center">
+                                טיפול אינטואיטיבי – מסע אישי
+                            </h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4 text-center leading-relaxed">
+                                שילוב חופשי ואינטואיטיבי של טכניקות לפי התחושה והצורך הייחודי שלך
+                            </p>
+                            
+                            <div class="flex justify-between items-center mb-6 text-sm">
+                                <div class="flex items-center text-gray-500">
+                                    <i class="fas fa-clock mr-1"></i>
+                                    <span>90 דק׳</span>
+                                </div>
+                                <div class="flex items-center text-gray-500">
+                                    <i class="fas fa-sparkles mr-1"></i>
+                                    <span>אישי</span>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <a href="https://wa.me/972501234567?text=שלום%20דפנה,%20אני%20מעוניינת%20להזמין%20טיפול%20אינטואיטיבי%20מסע%20אישי%20(400%20₪)" target="_blank" class="treatment-whatsapp w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-full text-center transition-colors flex items-center justify-center">
+                                    <i class="fab fa-whatsapp mr-2"></i>
+                                    הזמיני בוואטסאפ
+                                </a>
+                                <a href="#contact" class="treatment-contact w-full border-2 border-dustyRose text-dustyRose dark:border-sage dark:text-sage hover:bg-dustyRose hover:text-white dark:hover:bg-sage dark:hover:text-white py-2 rounded-full text-center transition-colors flex items-center justify-center">
+                                    <i class="fas fa-envelope mr-2"></i>
+                                    או שלחי הודעה
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-warmBeige dark:bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="font-serif-hebrew text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-8">
+                        בואי נתחיל את המסע
+                    </h2>
+                    <div class="w-24 h-1 bg-gradient-to-l from-dustyRose to-sage mx-auto mb-8"></div>
+                    <p class="text-xl text-gray-600 dark:text-gray-400">
+                        מוכנה להתחיל? שלחי הודעה או התקשרי
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Contact Form -->
+                    <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg">
+                        <h3 class="font-serif-hebrew text-2xl font-bold text-sage dark:text-dustyRose mb-6">שלחי הודעה</h3>
+                        <form class="space-y-6">
+                            <div>
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2">שם מלא</label>
+                                <input type="text" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-sage outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2">טלפון</label>
+                                <input type="tel" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-sage outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2">סוג הטיפול</label>
+                                <select class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-sage outline-none transition-all">
+                                    <option>עיסוי משולב הוליסטי - 320₪</option>
+                                    <option>עיסוי מרוקאי עמוק - 350₪</option>
+                                    <option>עיסוי תאילנדי־נשי - 370₪</option>
+                                    <option>עיסוי הריון - 300₪</option>
+                                    <option>טיפול אינטואיטיבי – מסע אישי - 400₪</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 dark:text-gray-300 mb-2">הודעה</label>
+                                <textarea rows="4" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-sage outline-none transition-all"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-dustyRose dark:bg-sage text-white py-3 rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                שלחי הודעה
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Contact Info -->
+                    <div class="space-y-8">
+                        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg text-center">
+                            <div class="w-16 h-16 bg-sage rounded-full flex items-center justify-center mx-auto mb-6">
+                                <i class="fab fa-whatsapp text-white text-2xl"></i>
+                            </div>
+                            <h3 class="font-serif-hebrew text-xl font-bold text-sage dark:text-dustyRose mb-4">וואטסאפ</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-6">לתיאום מהיר ונוח</p>
+                            <a href="https://wa.me/972501234567" target="_blank" class="inline-flex items-center px-6 py-3 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors">
+                                <i class="fab fa-whatsapp mr-2"></i>
+                                שלחי הודעה
+                            </a>
+                        </div>
+                        
+                        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg text-center">
+                            <div class="w-16 h-16 bg-dustyRose rounded-full flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-phone text-white text-2xl"></i>
+                            </div>
+                            <h3 class="font-serif-hebrew text-xl font-bold text-sage dark:text-dustyRose mb-4">טלפון</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-6">לשיחה אישית</p>
+                            <a href="tel:+972501234567" class="inline-flex items-center px-6 py-3 bg-dustyRose dark:bg-sage text-white rounded-full hover:opacity-90 transition-opacity">
+                                <i class="fas fa-phone mr-2"></i>
+                                050-123-4567
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-sage dark:bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                            <!-- Lotus SVG Logo -->
+                            <svg class="w-5 h-5 text-sage" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C12 2 16 6 16 12C16 16.5 14 20 12 22C10 20 8 16.5 8 12C8 6 12 2 12 2Z"/>
+                                <path d="M12 2C12 2 8 6 8 12C8 16.5 10 20 12 22C14 20 16 16.5 16 12C16 6 12 2 12 2Z" opacity="0.7"/>
+                                <circle cx="12" cy="12" r="2" opacity="0.5"/>
+                            </svg>
+                        </div>
+                        <h3 class="font-serif-hebrew text-2xl font-bold">טאבט</h3>
+                    </div>
+                    <p class="text-gray-200 leading-relaxed">
+                        מרחב נשי מרפא למסע פנימי של ריפוי ושלווה
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-serif-hebrew text-xl font-bold mb-6">קישורים</h4>
+                    <div class="space-y-3">
+                        <a href="#hero" class="block text-gray-200 hover:text-white transition-colors">בית</a>
+                        <a href="#about" class="block text-gray-200 hover:text-white transition-colors">אודות</a>
+                        <a href="#treatments" class="block text-gray-200 hover:text-white transition-colors">טיפולים</a>
+                        <a href="#contact" class="block text-gray-200 hover:text-white transition-colors">יצירת קשר</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-serif-hebrew text-xl font-bold mb-6">צרי קשר</h4>
+                    <div class="space-y-3">
+                        <p class="text-gray-200">050-123-4567</p>
+                        <p class="text-gray-200">daphna@tabet.co.il</p>
+                        <div class="flex space-x-4 mt-6">
+                            <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                                <i class="fab fa-instagram text-sage"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                                <i class="fab fa-facebook text-sage"></i>
+                            </a>
+                            <a href="https://wa.me/972501234567" class="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                                <i class="fab fa-whatsapp text-sage"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/20 mt-12 pt-8 text-center">
+                <p class="text-gray-200">
+                    © 2024 טאבט - מסעות קסומים. כל הזכויות שמורות.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <div class="fixed bottom-6 left-6 z-50">
+        <a href="https://wa.me/972501234567" target="_blank" class="whatsapp-float w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-lg hover:scale-110 transition-transform duration-300">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html> 
