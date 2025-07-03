@@ -234,6 +234,14 @@ function initializeMobileMenu() {
     });
     
     if (mobileMenuButton && mobileMenu) {
+        // Initialize menu state - make sure it starts hidden
+        mobileMenu.classList.add('hidden');
+        mobileMenu.style.display = 'none';
+        mobileMenu.style.opacity = '0';
+        mobileMenu.style.visibility = 'hidden';
+        
+        console.log('Mobile menu initialized as hidden');
+        
         // Remove any existing listeners
         mobileMenuButton.onclick = null;
         
@@ -244,14 +252,31 @@ function initializeMobileMenu() {
             
             console.log('Mobile menu button clicked!');
             console.log('Menu classes before toggle:', mobileMenu.className);
+            console.log('Menu style before toggle:', mobileMenu.style.cssText);
             
-            const isHidden = mobileMenu.classList.contains('hidden');
+            const isHidden = mobileMenu.classList.contains('hidden') || 
+                           mobileMenu.style.display === 'none';
+            
             if (isHidden) {
+                // Show menu
                 mobileMenu.classList.remove('hidden');
+                mobileMenu.style.display = 'block';
+                mobileMenu.style.opacity = '1';
+                mobileMenu.style.visibility = 'visible';
                 console.log('Mobile menu opened - classes now:', mobileMenu.className);
+                console.log('Mobile menu opened - style now:', mobileMenu.style.cssText);
             } else {
+                // Hide menu
                 mobileMenu.classList.add('hidden');
+                mobileMenu.style.opacity = '0';
+                mobileMenu.style.visibility = 'hidden';
+                setTimeout(() => {
+                    if (mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.style.display = 'none';
+                    }
+                }, 300);
                 console.log('Mobile menu closed - classes now:', mobileMenu.className);
+                console.log('Mobile menu closed - style now:', mobileMenu.style.cssText);
             }
         });
         
@@ -259,6 +284,14 @@ function initializeMobileMenu() {
         document.addEventListener('click', function(e) {
             if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
                 mobileMenu.classList.add('hidden');
+                mobileMenu.style.opacity = '0';
+                mobileMenu.style.visibility = 'hidden';
+                setTimeout(() => {
+                    if (mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.style.display = 'none';
+                    }
+                }, 300);
+                console.log('Mobile menu closed via outside click');
             }
         });
         
@@ -266,6 +299,13 @@ function initializeMobileMenu() {
         mobileMenuLinks.forEach(link => {
             link.addEventListener('click', function() {
                 mobileMenu.classList.add('hidden');
+                mobileMenu.style.opacity = '0';
+                mobileMenu.style.visibility = 'hidden';
+                setTimeout(() => {
+                    if (mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.style.display = 'none';
+                    }
+                }, 300);
                 console.log('Mobile menu closed via link click');
             });
         });
