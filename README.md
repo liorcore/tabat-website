@@ -1,4 +1,4 @@
-# 🌸 טאבט - מסעות קסומים
+# 🌸 טאבט - מסעות קסומים | Tabet - Magical Journeys
 
 ## 🌟 אתר טיפולים רגשיים-גופניים 
 
@@ -98,3 +98,21 @@ python -m http.server 8000
 *אתר זה פותח במיוחד עבור טאבט ומותאם לצרכיה הספציפיים.* ✨
 
 🚀 **האתר פועל בכתובת:** [tabat-website.vercel.app](https://tabat-website.vercel.app) 
+
+## תכונות
+- עיצוב רספונסיבי מתוחכם
+- תמיכה במצב כהה (Dark Mode)
+- אנימציות GSAP חלקות
+- טפסי יצירת קשר
+- אופטימיזציה למובייל
+
+## טכנולוגיות
+- HTML5 + CSS3
+- Tailwind CSS
+- JavaScript (ES6+)
+- GSAP Animation Library
+- Font Awesome Icons
+
+---
+
+**Last Updated**: עדכון דחוף לתיקון Mobile Menu ו-Dark Mode - Build #3 
