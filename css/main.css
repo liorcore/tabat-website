@@ -56,7 +56,7 @@ html {
 
 /* Floating animation for elements */
 .float {
-  animation: float 3s ease-in-out infinite;
+  animation: float 4s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -64,7 +64,7 @@ html {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
   }
 }
 
@@ -168,8 +168,31 @@ input:focus, textarea:focus, select:focus {
 
 /* Custom divider */
 .custom-divider {
-  height: 1px;
-  background: linear-gradient(to right, transparent, #D4A5A5, #87A96B, transparent);
+    height: 1px;
+    background: linear-gradient(to right, transparent, #D4A5A5, #87A96B, transparent);
+}
+
+/* Styled Title */
+.styled-title {
+    font-family: 'Amatic SC', 'Frank Ruhl Libre', cursive;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.15);
+    background: linear-gradient(135deg, #87A96B 0%, #D4A5A5 50%, #87A96B 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: titleGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    0% {
+        filter: brightness(1) contrast(1);
+    }
+    100% {
+        filter: brightness(1.1) contrast(1.1);
+    }
 }
 
 /* Dark mode transitions */
@@ -622,6 +645,7 @@ header {
 /* Enhanced hero section */
 #hero {
   position: relative;
+  min-height: 100vh;
 }
 
 #hero::before {
@@ -631,8 +655,8 @@ header {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 30% 20%, rgba(139, 171, 155, 0.1) 0%, transparent 50%),
-              radial-gradient(circle at 70% 80%, rgba(212, 165, 165, 0.1) 0%, transparent 50%);
+  background: radial-gradient(circle at 30% 20%, rgba(139, 171, 155, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 70% 80%, rgba(212, 165, 165, 0.05) 0%, transparent 50%);
   pointer-events: none;
   z-index: 1;
 }
@@ -689,9 +713,479 @@ header {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Enhanced Mobile Menu Styles - GLOBAL */
+.mobile-menu-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(-10px) scale(0.95) !important;
+    pointer-events: none !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    display: none !important;
+}
+
+.mobile-menu-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) scale(1) !important;
+    pointer-events: auto !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    display: block !important;
+}
+
+/* SUPER STRONG mobile menu positioning - override everything */
+#mobileMenu,
+div[id="mobileMenu"],
+.mobile-menu-visible {
+    position: fixed !important;
+    top: 5rem !important;
+    right: 1rem !important;
+    left: auto !important;
+    width: 14rem !important;
+    max-width: calc(100vw - 2rem) !important;
+    z-index: 99999 !important;
+    margin: 0 !important;
+    transform: translateX(0) translateY(0) !important;
+    box-sizing: border-box !important;
+}
+
+/* Extra safety for mobile menu visibility */
+#mobileMenu.mobile-menu-visible {
+    position: fixed !important;
+    display: block !important;
+    right: 1rem !important;
+    top: 5rem !important;
+    left: auto !important;
+    width: 14rem !important;
+    max-width: calc(100vw - 2rem) !important;
+}
+
+#mobileMenu {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    z-index: 9999 !important;
+    margin-top: 0.5rem !important;
+    
+    /* Prevent menu from going off-screen */
+    max-width: calc(100vw - 2rem) !important;
+    box-sizing: border-box !important;
+}
+
+/* Ensure mobile menu container is positioned correctly */
+.relative.md\\:hidden {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+/* Fallback styles for mobile menu - STRONG OVERRIDE */
+#mobileMenu.mobile-menu-visible,
+.mobile-menu-visible {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+}
+
+#mobileMenu.mobile-menu-hidden,
+.mobile-menu-hidden {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Force mobile menu positioning */
+div[id="mobileMenu"] {
+    position: absolute !important;
+    background: white !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
+    padding: 1.5rem !important;
+    width: 15rem !important;
+    max-width: 85vw !important;
+    border: 1px solid #e5e7eb !important;
+    z-index: 10000 !important;
+    right: 0.5rem !important;
+    left: auto !important;
+    top: 100% !important;
+    margin-top: 0.5rem !important;
+    margin-right: 0 !important;
+    transform: translateX(0) !important;
+}
+
+.dark div[id="mobileMenu"] {
+    background: #1f2937 !important;
+    border-color: #4b5563 !important;
+}
+
+/* Responsive mobile menu for small screens */
+@media (max-width: 480px) {
+    #mobileMenu,
+    div[id="mobileMenu"] {
+        position: fixed !important;
+        width: 13rem !important;
+        max-width: calc(100vw - 1.5rem) !important;
+        padding: 1rem !important;
+        right: 0.75rem !important;
+        top: 5rem !important;
+        left: auto !important;
+        margin: 0 !important;
+        transform: translateX(0) translateY(0) !important;
+    }
+}
+
+@media (max-width: 360px) {
+    #mobileMenu,
+    div[id="mobileMenu"] {
+        position: fixed !important;
+        width: 11rem !important;
+        max-width: calc(100vw - 0.5rem) !important;
+        padding: 0.75rem !important;
+        font-size: 0.9rem !important;
+        right: 0.25rem !important;
+        top: 5rem !important;
+        left: auto !important;
+        transform: translateX(0) translateY(0) !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
+}
+
+/* For very small phones */
+@media (max-width: 320px) {
+    #mobileMenu,
+    div[id="mobileMenu"] {
+        width: 10rem !important;
+        max-width: calc(100vw - 0.25rem) !important;
+        right: 0.125rem !important;
+        padding: 0.5rem !important;
+        font-size: 0.85rem !important;
+    }
+    
+    #mobileMenu .space-y-4 > * {
+        padding: 0.5rem !important;
+        font-size: 0.85rem !important;
+    }
+}
+
+/* Mobile Menu Icon Styling - Clean Lines */
+.mobile-menu-link i {
+    color: #8BA888 !important; /* sage color */
+    opacity: 0.8;
+    transition: all 0.2s ease;
+    font-weight: normal;
+}
+
+.mobile-menu-link:hover i {
+    color: #C49A9A !important; /* dustyRose color */
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.dark .mobile-menu-link i {
+    color: #C49A9A !important; /* dustyRose for dark mode */
+    opacity: 0.9;
+}
+
+.dark .mobile-menu-link:hover i {
+    color: #8BA888 !important; /* sage for dark mode hover */
+    opacity: 1;
+}
+
+/* Special styling for the book treatment button */
+a[href="#treatments"].bg-gradient-to-r i {
+    color: white !important;
+    opacity: 1 !important;
+}
+
+a[href="#treatments"].bg-gradient-to-r:hover i {
+    color: white !important;
+    transform: scale(1.2) !important;
+}
+
+/* TABAT Logo Background */
+.tabat-logo-bg {
+    width: 110vh;
+    height: 110vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    background-image: url('../pictures/TABAT-LOGO.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 1.0;
+    
+    /* Apply sage and dusty rose colors using filters */
+    filter: 
+        sepia(70%) 
+        hue-rotate(90deg) 
+        saturate(250%) 
+        brightness(1.4) 
+        contrast(1.5)
+        drop-shadow(0 0 20px rgba(139, 168, 136, 0.3));
+    
+    /* Animation - gentle floating */
+    animation: logoFloat 8s ease-in-out infinite;
+}
+
+.dark .tabat-logo-bg {
+    opacity: 0.9;
+    filter: 
+        sepia(70%) 
+        hue-rotate(120deg) 
+        saturate(220%) 
+        brightness(1.3) 
+        contrast(1.4)
+        drop-shadow(0 0 25px rgba(196, 154, 154, 0.4));
+}
+
+/* Floating animation for logo */
+@keyframes logoFloat {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translateY(-10px) rotate(1deg) scale(1.02);
+    }
+    50% {
+        transform: translateY(-15px) rotate(0deg) scale(1.05);
+    }
+    75% {
+        transform: translateY(-5px) rotate(-1deg) scale(1.02);
+    }
+}
+
+/* Navbar Logo with Gradient Overlay */
+.navbar-logo {
+    background: linear-gradient(135deg, #D4A5A5 0%, #F5C2C7 35%, #87A96B 100%);
+    position: relative;
+}
+
+.navbar-logo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(212, 165, 165, 0.8) 0%, 
+        rgba(245, 194, 199, 0.7) 35%, 
+        rgba(135, 169, 107, 0.8) 100%);
+    border-radius: inherit;
+    z-index: 1;
+    mix-blend-mode: multiply;
+}
+
+.navbar-logo img {
+    position: relative;
+    z-index: 2;
+    filter: brightness(100) contrast(1) saturate(0);
+    width: auto;
+    height: 50px; /* גובה מותאם ללוגו */
+}
+
+.dark .navbar-logo {
+    background: linear-gradient(135deg, #C49A9A 0%, #E5B2B7 35%, #7A8F61 100%);
+}
+
+.dark .navbar-logo::before {
+    background: linear-gradient(135deg, 
+        rgba(196, 154, 154, 0.7) 0%, 
+        rgba(229, 178, 183, 0.6) 35%, 
+        rgba(122, 143, 97, 0.7) 100%);
+}
+
+.dark .navbar-logo img {
+    filter: brightness(100) contrast(1) saturate(0);
+    width: auto;
+    height: 50px; /* גובה מותאם ללוגו */
+}
+
+/* Footer Logo with Gradient */
+.footer-logo {
+    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 50%, #e0e0e0 100%);
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.footer-logo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(212, 165, 165, 0.3) 0%, 
+        rgba(135, 169, 107, 0.3) 100%);
+    border-radius: inherit;
+    z-index: 1;
+    mix-blend-mode: multiply;
+}
+
+.footer-logo img {
+    position: relative;
+    z-index: 2;
+    filter: brightness(2.0) contrast(0.9) saturate(0) hue-rotate(0deg);
+}
+
+.dark .footer-logo {
+    background: linear-gradient(135deg, #4B5563 0%, #374151 50%, #1F2937 100%);
+}
+
+.dark .footer-logo::before {
+    background: linear-gradient(135deg, 
+        rgba(196, 154, 154, 0.4) 0%, 
+        rgba(122, 143, 97, 0.4) 100%);
+}
+
+.dark .footer-logo img {
+    filter: brightness(2.2) contrast(0.9) saturate(0) hue-rotate(0deg);
+}
+
+/* Hero Background Image Layer - Background image with HERO-BACKGROUND.png
+   Background image for the hero section
+*/
+.hero-bg-image {
+    background-image: url('../pictures/HERO-BACKGROUND.png');
+    background-size: 100% auto; /* גודל מדויק */
+    background-position: center top -120px;
+    background-repeat: no-repeat;
+    opacity: 0.5; /* שקיפות גבוהה יותר */
+    mix-blend-mode: normal; /* מצב ערבוב רגיל */
+    z-index: 1;
+}
+
+.dark .hero-bg-image {
+    background-image: url('../pictures/HERO-BACKGROUND.png');
+    background-size: 100% auto; /* גודל מדויק */
+    background-position: center top -120px;
+    background-repeat: no-repeat;
+    opacity: 0.4; /* שקיפות גבוהה יותר במצב כהה */
+    mix-blend-mode: normal; /* מצב ערבוב רגיל */
+}
+
+/* Extra Large Screens - Even Bigger Logo */
+@media (min-width: 1440px) {
+    .tabat-logo-bg {
+        width: 120vh;
+        height: 120vh;
+        max-width: 100vw;
+        max-height: 100vh;
+    }
+    
+    .hero-bg-image {
+        background-size: cover; /* כיסוי מלא */
+        opacity: 0.3; /* רקע עדין יותר */
+    }
+    
+    .dark .hero-bg-image {
+        background-size: cover; /* כיסוי מלא */
+        opacity: 0.2; /* רקע עדין יותר במצב כהה */
+    }
+}
+
+@media (min-width: 1920px) {
+    .tabat-logo-bg {
+        width: 130vh;
+        height: 130vh;
+        max-width: 100vw;
+        max-height: 100vh;
+    }
+    
+    .hero-bg-image {
+        background-size: cover; /* כיסוי מלא */
+        opacity: 0.3; /* רקע עדין יותר */
+    }
+    
+    .dark .hero-bg-image {
+        background-size: cover; /* כיסוי מלא */
+        opacity: 0.2; /* רקע עדין יותר במצב כהה */
+    }
+}
+
+/* Responsive logo sizes */
+@media (max-width: 768px) {
+    .tabat-logo-bg {
+        width: 100vh;
+        height: 100vh;
+        max-width: 95vw;
+        max-height: 95vh;
+        opacity: 1.0;
+    }
+    
+    .hero-bg-image {
+        background-size: cover; /* כיסוי מלא */
+        opacity: 0.3; /* רקע עדין יותר גם במובייל */
+    }
+    
+    .dark .hero-bg-image {
+        background-size: cover; /* כיסוי מלא */
+        opacity: 0.2; /* רקע עדין יותר במצב כהה */
+    }
+}
+
+@media (max-width: 480px) {
+    .tabat-logo-bg {
+        width: 90vh;
+        height: 90vh;
+        max-width: 90vw;
+        max-height: 90vh;
+        opacity: 0.9;
+    }
+    
+    .hero-bg-image {
+        background-size: cover; /* כיסוי מלא */
+        opacity: 0.3; /* רקע עדין יותר */
+    }
+    
+    .dark .hero-bg-image {
+        background-size: cover; /* כיסוי מלא */
+        opacity: 0.2; /* רקע עדין יותר במצב כהה */
+    }
+}
+
+/* Force visibility and prevent overflow issues */
+@media (max-width: 768px) {
+    .relative.md\\:hidden {
+        overflow: visible !important;
+    }
+    
+    div[id="mobileMenu"] {
+        position: fixed !important;
+        right: 1rem !important;
+        left: auto !important;
+        top: 5rem !important;
+        transform: translateX(0) !important;
+        margin-top: 0 !important;
+        width: 14rem !important;
+        max-width: calc(100vw - 2rem) !important;
+    }
+}
+
+/* Mobile Menu Button Animation */
+#mobileMenuButton {
+    position: relative !important;
+    z-index: 10000 !important;
+}
+
+#mobileMenuButton:active {
+    transform: scale(0.95) !important;
+}
+
+#mobileMenuButton i {
+    transition: transform 0.2s ease !important;
+}
+
+#mobileMenuButton:hover i {
+    transform: rotate(90deg) !important;
+}
+
 /* Mobile menu animation */
 @media (max-width: 768px) {
-  .mobile-menu {
+.mobile-menu {
     animation: slideIn 0.3s ease-out;
   }
   
@@ -705,4 +1199,31 @@ header {
       transform: translateY(0);
     }
   }
+}
+
+/* About Background Carousel */
+.about-bg-carousel {
+  position: relative;
+}
+
+.bg-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+
+.bg-slide.active {
+  opacity: 1;
+}
+
+/* Smooth animation for background changes */
+@keyframes backgroundFade {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
 }

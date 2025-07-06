@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeNavigation();
         initializeMobileMenu();
         initializeWhatsAppFloat();
+        initializeAboutCarousel();
         
         // Mark as loaded
         isLoaded = true;
@@ -243,95 +244,63 @@ function initializeMobileMenu() {
         return;
     }
     
-    // Add CSS rules directly to ensure mobile menu works
-    const style = document.createElement('style');
-    style.textContent = `
-        .mobile-menu-hidden {
-            display: none !important;
-            opacity: 0 !important;
-            visibility: hidden !important;
-            transform: translateY(-10px) !important;
-        }
-        .mobile-menu-visible {
-            display: block !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            transform: translateY(0) !important;
-            transition: all 0.3s ease !important;
-        }
-        #mobileMenu {
-            position: absolute !important;
-            top: 100% !important;
-            right: 0 !important;
-            z-index: 9999 !important;
-            background: white !important;
-            border-radius: 12px !important;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1) !important;
-            padding: 1rem !important;
-            width: 16rem !important;
-            border: 1px solid #e5e7eb !important;
-        }
-        .dark #mobileMenu {
-            background: #1f2937 !important;
-            border-color: #4b5563 !important;
-        }
-    `;
-    document.head.appendChild(style);
-    
     // Initialize menu state - start hidden
     mobileMenu.classList.add('mobile-menu-hidden');
-    mobileMenu.classList.remove('mobile-menu-visible', 'hidden');
+    mobileMenu.classList.remove('mobile-menu-visible');
     
     console.log('✅ Mobile menu initialized as hidden');
     
-    // Clear any existing listeners
-    mobileMenuButton.onclick = null;
+    // Variable to track menu state
+    let isMenuOpen = false;
     
-    // Mobile menu toggle function
-    function toggleMobileMenu() {
-        console.log('🔄 Toggling mobile menu...');
+    // Simple toggle function
+    function toggleMobileMenu(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
         
-        const isHidden = mobileMenu.classList.contains('mobile-menu-hidden');
-        console.log('Menu is currently hidden:', isHidden);
+        console.log('🔄 Toggling mobile menu...', 'Current state:', isMenuOpen);
         
-        if (isHidden) {
-            // Show menu
-            mobileMenu.classList.remove('mobile-menu-hidden');
-            mobileMenu.classList.add('mobile-menu-visible');
-            console.log('✅ Mobile menu opened');
-        } else {
+        if (isMenuOpen) {
             // Hide menu
             mobileMenu.classList.remove('mobile-menu-visible');
             mobileMenu.classList.add('mobile-menu-hidden');
+            isMenuOpen = false;
             console.log('✅ Mobile menu closed');
+        } else {
+            // Show menu
+            mobileMenu.classList.remove('mobile-menu-hidden');
+            mobileMenu.classList.add('mobile-menu-visible');
+            isMenuOpen = true;
+            console.log('✅ Mobile menu opened');
         }
     }
     
     // Hide menu function
     function hideMobileMenu() {
-        mobileMenu.classList.remove('mobile-menu-visible');
-        mobileMenu.classList.add('mobile-menu-hidden');
-        console.log('🔒 Mobile menu hidden');
+        if (isMenuOpen) {
+            mobileMenu.classList.remove('mobile-menu-visible');
+            mobileMenu.classList.add('mobile-menu-hidden');
+            isMenuOpen = false;
+            console.log('🔒 Mobile menu hidden');
+        }
     }
     
-    // Add click event to button
-    mobileMenuButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('🖱️ Mobile menu button clicked!');
-        toggleMobileMenu();
-    });
+    // Clear any existing event listeners
+    mobileMenuButton.replaceWith(mobileMenuButton.cloneNode(true));
+    const newButton = document.getElementById('mobileMenuButton');
     
-    // Also try with touchstart for mobile devices
-    mobileMenuButton.addEventListener('touchstart', function(e) {
-        e.preventDefault();
-        console.log('👆 Mobile menu button touched!');
-        toggleMobileMenu();
-    });
+    // Add click event to button (multiple ways for compatibility)
+    newButton.addEventListener('click', toggleMobileMenu);
+    newButton.addEventListener('touchend', toggleMobileMenu);
+    
+    // Force click handler as backup
+    newButton.onclick = toggleMobileMenu;
     
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {
-        if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+        if (isMenuOpen && !mobileMenu.contains(e.target) && !newButton.contains(e.target)) {
             hideMobileMenu();
         }
     });
@@ -343,16 +312,26 @@ function initializeMobileMenu() {
         });
     });
     
-    // Add visual feedback on button hover/touch
-    mobileMenuButton.addEventListener('mouseenter', function() {
+    // Add visual feedback
+    newButton.addEventListener('mouseenter', function() {
         this.style.transform = 'scale(1.05)';
     });
     
-    mobileMenuButton.addEventListener('mouseleave', function() {
+    newButton.addEventListener('mouseleave', function() {
         this.style.transform = 'scale(1)';
     });
     
+    // Test function for debugging
+    window.testMobileMenu = function() {
+        console.log('🧪 Testing mobile menu...');
+        console.log('Button exists:', !!newButton);
+        console.log('Menu exists:', !!mobileMenu);
+        console.log('Menu is open:', isMenuOpen);
+        toggleMobileMenu();
+    };
+    
     console.log('✅ Mobile menu initialization complete!');
+    console.log('💡 Test with: testMobileMenu() in console');
 }
 
 function initializeNavigation() {
@@ -549,8 +528,59 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeFormHandling();
         initializeNavigation();
         initializeWhatsAppFloat();
+        initializeAboutCarousel();
+        
+        // Fix mobile menu after all initialization
+        setTimeout(fixMobileMenuIfNeeded, 500);
     }, 100);
 });
+
+// Auto-fix mobile menu function
+function fixMobileMenuIfNeeded() {
+    console.log('🔧 Checking mobile menu...');
+    
+    const button = document.getElementById('mobileMenuButton');
+    const menu = document.getElementById('mobileMenu');
+    
+    if (!button || !menu) {
+        console.warn('⚠️ Mobile menu elements not found!');
+        return;
+    }
+    
+    // Make sure the menu starts hidden and positioned correctly
+    menu.classList.add('mobile-menu-hidden');
+    menu.classList.remove('mobile-menu-visible');
+    menu.style.display = 'none';
+    
+    // Force correct positioning
+    menu.style.position = 'fixed';
+    menu.style.top = '5rem';
+    menu.style.right = '1rem';
+    menu.style.left = 'auto';
+    menu.style.width = '14rem';
+    menu.style.maxWidth = 'calc(100vw - 2rem)';
+    menu.style.zIndex = '99999';
+    menu.style.margin = '0';
+    menu.style.transform = 'translateX(0) translateY(0)';
+    menu.style.boxSizing = 'border-box';
+    
+    // Force click handlers
+    button.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('🎯 Direct click handler triggered!');
+        toggleMobileMenuManual();
+    };
+    
+    // Test the toggle function
+    if (typeof window.toggleMobileMenuManual === 'function') {
+        console.log('✅ Mobile menu toggle function available');
+    } else {
+        console.error('❌ Mobile menu toggle function missing!');
+    }
+    
+    console.log('✅ Mobile menu fix completed');
+}
 
 // Also try immediate initialization for dark mode
 window.addEventListener('load', function() {
@@ -592,15 +622,154 @@ function forceVisibility() {
     console.log('✅ Force visibility completed (dark mode friendly)');
 }
 
+// About Background Carousel
+function initializeAboutCarousel() {
+    const slides = document.querySelectorAll('.bg-slide');
+    let currentSlide = 0;
+    
+    if (slides.length === 0) return;
+    
+    function showNextSlide() {
+        // Hide current slide
+        slides[currentSlide].classList.remove('active');
+        
+        // Move to next slide
+        currentSlide = (currentSlide + 1) % slides.length;
+        
+        // Show next slide
+        slides[currentSlide].classList.add('active');
+    }
+    
+    // Change slide every 4 seconds
+    setInterval(showNextSlide, 4000);
+    
+    console.log('🖼️ About background carousel initialized');
+}
+
+// Global Mobile Menu Toggle Function - SIMPLE & RELIABLE
+window.toggleMobileMenuManual = function() {
+    console.log('🚀 Manual mobile menu toggle called!');
+    
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (!mobileMenu) {
+        console.error('Mobile menu not found!');
+        return;
+    }
+    
+    const isHidden = mobileMenu.classList.contains('mobile-menu-hidden') || 
+                    mobileMenu.style.display === 'none' || 
+                    !mobileMenu.classList.contains('mobile-menu-visible');
+    
+    console.log('Menu is hidden:', isHidden);
+    
+    if (isHidden) {
+        // Show menu and ensure proper positioning
+        mobileMenu.style.display = 'block';
+        mobileMenu.classList.remove('mobile-menu-hidden');
+        mobileMenu.classList.add('mobile-menu-visible');
+        
+        // Ensure proper fixed positioning
+        setTimeout(() => {
+            mobileMenu.style.position = 'fixed';
+            mobileMenu.style.top = '5rem';
+            mobileMenu.style.right = '1rem';
+            mobileMenu.style.left = 'auto';
+            mobileMenu.style.width = '14rem';
+            mobileMenu.style.maxWidth = 'calc(100vw - 2rem)';
+            mobileMenu.style.zIndex = '99999';
+            mobileMenu.style.margin = '0';
+            mobileMenu.style.transform = 'translateX(0) translateY(0)';
+        }, 10);
+        
+        console.log('✅ Menu opened');
+    } else {
+        // Hide menu
+        mobileMenu.classList.remove('mobile-menu-visible');
+        mobileMenu.classList.add('mobile-menu-hidden');
+        setTimeout(() => {
+            if (mobileMenu.classList.contains('mobile-menu-hidden')) {
+                mobileMenu.style.display = 'none';
+            }
+        }, 300);
+        console.log('✅ Menu closed');
+    }
+};
+
+// Function to adjust menu position if it goes off-screen
+function adjustMenuPosition(menu) {
+    const rect = menu.getBoundingClientRect();
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    
+    console.log('Menu position check:', {
+        right: rect.right,
+        screenWidth: screenWidth,
+        isOffScreen: rect.right > screenWidth
+    });
+    
+    // If menu goes off the right edge
+    if (rect.right > screenWidth - 10) {
+        const adjustment = rect.right - screenWidth + 20;
+        menu.style.right = adjustment + 'px';
+        console.log('✅ Adjusted menu position:', adjustment + 'px from right');
+    }
+    
+    // If menu goes off the bottom edge
+    if (rect.bottom > screenHeight - 10) {
+        menu.style.top = 'auto';
+        menu.style.bottom = '100%';
+        menu.style.marginBottom = '0.5rem';
+        menu.style.marginTop = '0';
+        console.log('✅ Moved menu above button');
+    }
+};
+
+// Alternative simple toggle
+window.simpleMobileToggle = function() {
+    const menu = document.getElementById('mobileMenu');
+    if (menu.style.display === 'none' || menu.style.display === '') {
+        menu.style.display = 'block';
+        menu.style.opacity = '1';
+        menu.style.visibility = 'visible';
+    } else {
+        menu.style.display = 'none';
+        menu.style.opacity = '0';
+        menu.style.visibility = 'hidden';
+    }
+};
+
+// Force mobile menu position on window resize
+window.addEventListener('resize', function() {
+    const menu = document.getElementById('mobileMenu');
+    if (menu) {
+        menu.style.position = 'fixed';
+        menu.style.top = '5rem';
+        menu.style.right = '1rem';
+        menu.style.left = 'auto';
+        menu.style.width = '14rem';
+        menu.style.maxWidth = 'calc(100vw - 2rem)';
+        menu.style.zIndex = '99999';
+        menu.style.margin = '0';
+        menu.style.transform = 'translateX(0) translateY(0)';
+        menu.style.boxSizing = 'border-box';
+    }
+});
+
 // Console message
 console.log(`
 🌸 טאבט - מסעות קסומים
 ✨ האתר נטען בהצלחה!
 💫 מוכנות למסע?
+🍔 Mobile menu functions available:
+   - toggleMobileMenuManual()
+   - simpleMobileToggle()
+🔧 Fixed positioning: right: 1rem, top: 5rem
 `);
 
 // Export functions for global access if needed
 window.TabetWebsite = {
     showNotification,
-    optimizePerformance
+    optimizePerformance,
+    toggleMobileMenuManual,
+    simpleMobileToggle
 }; 
