@@ -916,28 +916,12 @@ a[href="#treatments"].bg-gradient-to-r:hover i {
     background-position: center;
     opacity: 1.0;
     
-    /* Apply sage and dusty rose colors using filters */
-    filter: 
-        sepia(70%) 
-        hue-rotate(90deg) 
-        saturate(250%) 
-        brightness(1.4) 
-        contrast(1.5)
-        drop-shadow(0 0 20px rgba(139, 168, 136, 0.3));
-    
     /* Animation - gentle floating */
     animation: logoFloat 8s ease-in-out infinite;
 }
 
 .dark .tabat-logo-bg {
     opacity: 0.9;
-    filter: 
-        sepia(70%) 
-        hue-rotate(120deg) 
-        saturate(220%) 
-        brightness(1.3) 
-        contrast(1.4)
-        drop-shadow(0 0 25px rgba(196, 154, 154, 0.4));
 }
 
 /* Floating animation for logo */
@@ -1028,7 +1012,7 @@ a[href="#treatments"].bg-gradient-to-r:hover i {
 .footer-logo img {
     position: relative;
     z-index: 2;
-    filter: brightness(2.0) contrast(0.9) saturate(0) hue-rotate(0deg);
+    filter: brightness(0.9) contrast(1.1);
 }
 
 .dark .footer-logo {
@@ -1042,7 +1026,7 @@ a[href="#treatments"].bg-gradient-to-r:hover i {
 }
 
 .dark .footer-logo img {
-    filter: brightness(2.2) contrast(0.9) saturate(0) hue-rotate(0deg);
+    filter: brightness(0.9) contrast(1.1);
 }
 
 /* Hero Background Image Layer - Background image with HERO-BACKGROUND.png
@@ -1050,21 +1034,14 @@ a[href="#treatments"].bg-gradient-to-r:hover i {
 */
 .hero-bg-image {
     background-image: url('../pictures/HERO-BACKGROUND.png');
-    background-size: 100% auto; /* גודל מדויק */
+    background-size: 100% auto;
     background-position: center top -120px;
     background-repeat: no-repeat;
-    opacity: 0.5; /* שקיפות גבוהה יותר */
-    mix-blend-mode: normal; /* מצב ערבוב רגיל */
-    z-index: 1;
+    opacity: 1; 
 }
 
 .dark .hero-bg-image {
-    background-image: url('../pictures/HERO-BACKGROUND.png');
-    background-size: 100% auto; /* גודל מדויק */
-    background-position: center top -120px;
-    background-repeat: no-repeat;
-    opacity: 0.4; /* שקיפות גבוהה יותר במצב כהה */
-    mix-blend-mode: normal; /* מצב ערבוב רגיל */
+    opacity: 1;
 }
 
 /* Extra Large Screens - Even Bigger Logo */
